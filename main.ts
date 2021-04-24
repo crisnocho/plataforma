@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const Moneda = SpriteKind.create()
     export const cofre = SpriteKind.create()
+    export const Wario = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile6`, function (sprite, location) {
     game.over(false, effects.dissolve)
@@ -69,7 +70,7 @@ function personaje () {
         . f e e f 6 6 6 6 f f . 
         . f f f f f f f f f f . 
         . . f f . . . f f f . . 
-        `, SpriteKind.Player)
+        `, SpriteKind.Wario)
     controller.moveSprite(mario, 100, 0)
     mario.ay = 150
     scene.cameraFollowSprite(mario)
@@ -334,6 +335,14 @@ function enemigo () {
     fantasma.setVelocity(50, 0)
     fantasma.setFlag(SpriteFlag.BounceOnWall, true)
 }
+sprites.onOverlap(SpriteKind.Wario, SpriteKind.cofre, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    game.over(true)
+})
+sprites.onOverlap(SpriteKind.Wario, SpriteKind.Moneda, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeScoreBy(100)
+})
 let fantasma: Sprite = null
 let cofre: Sprite = null
 let mario: Sprite = null
